@@ -173,6 +173,32 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
             AreEqual(expResponse, actualResponse);
         }
 
+        [Test]
+        public async Task AutoscaleSettingsDeleteTest()
+        {
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
+            await insightsClient.AutoscaleSettings.DeleteAsync("rg1", "AutoscaleSettings1");
+        }
+
+        [Test]
+        public async Task AutoscaleSettingsListByResourceGroupTest()
+        {
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
+            await insightsClient.AutoscaleSettings.ListByResourceGroupAsync("rg1").ToEnumerableAsync();
+        }
+
+        //[Test]
+        //public async Task AutoscaleSettingsListBySubscriptionTest()
+        //{
+        //    var mockResponse = new MockResponse((int)HttpStatusCode.OK);
+        //    var mockTransport = new MockTransport(mockResponse);
+        //    var insightsClient = GetInsightsManagementClient(mockTransport);
+        //    await insightsClient.AutoscaleSettings.ListBySubscriptionAsync("rg1").ToEnumerableAsync();
+        //}
 
         private static AutoscaleSettingResource CreateAutoscaleSetting(string location, string resourceUri, string metricName)
         {
